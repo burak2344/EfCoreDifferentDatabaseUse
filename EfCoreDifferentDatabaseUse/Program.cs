@@ -1,3 +1,6 @@
+using EfCoreDifferentDatabaseUse.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace EfCoreDifferentDatabaseUse
 {
 	public class Program
@@ -10,7 +13,10 @@ namespace EfCoreDifferentDatabaseUse
 			builder.Services.AddControllersWithViews();
 
 			// TODO : Set database provider
-			//builder.Services.AddDbContext<DatabaseContext>();
+			builder.Services.AddDbContext<DatabaseContext>(opts =>
+			{
+				opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+			});
 
 
 			var app = builder.Build();
